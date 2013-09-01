@@ -1,2 +1,5 @@
+==0.1.1 (01.09.2013)==
+* replaced bcchanger.com with mtgox.com
+
 ==0.1.0 (07.04.2013)==
 * initial release
