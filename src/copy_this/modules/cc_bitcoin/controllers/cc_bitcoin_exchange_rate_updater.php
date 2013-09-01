@@ -83,7 +83,7 @@ class cc_bitcoin_exchange_rate_updater {
         $this->_updateViaBlockchain();
         break;
       case 2:
-        $this->_updateViaBcChanger();
+        $this->_updateViaMtGox();
         break;
       default:
         break;
@@ -104,15 +104,14 @@ class cc_bitcoin_exchange_rate_updater {
   }
 
   /**
-   * Update via http://bcchanger.com
+   * Update via http://mtgox.com
    */
-  protected function _updateViaBcChanger() {
+  protected function _updateViaMtGox() {
 
     foreach ($this->_aCurrencies as $sCurrency) {
-      $sJson = file_get_contents("http://bcchanger.com/bitcoin_price_feed.php?feed_type=json&currency=" . $sCurrency);
-      $aJson = json_decode($sJson, true);
-
-      $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $aJson['BTC']['value'], $this->_sShopId, $this->_sModule);
+        $sJson = file_get_contents('http://data.mtgox.com/api/1/BTC' . $sCurrency . '/ticker');
+        $oJson = json_decode($sJson);
+        $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $oJson->return->avg->value, $this->_sShopId, $this->_sModule);
     }
   }
 }
