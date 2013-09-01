@@ -23,8 +23,13 @@
 
 $sLangName = 'English';
 $aLang = array(
-  'charset' => 'UTF-8',
-  'CC_BITCOIN_PRICE' => 'Bitcoin Price',
-  'CC_BITCOIN_SEND_ADDRESS' => 'Send your Bitcoin address now.',
-  'CC_BITCOIN_WAIT_ADDRESS' => 'Wait for the Bitcoin address.'
+    'charset' => 'UTF-8',
+    'CC_BITCOIN_PRICE' => 'Bitcoin Price',
+    'CC_BITCOIN_SEND_ADDRESS' => 'Send your Bitcoin address now.',
+    'CC_BITCOIN_WAIT_ADDRESS' => 'Wait for the Bitcoin address.',
+    'CC_BITCOIN_ORDER_ADDRESS' => 'Bitcoin Address for Order ',
+    'CC_BITCOIN_HELLO' => 'Hello',
+    'CC_BITCOIN_YOUR_ADDRESS' => 'please send the outstanding Bitcoin amount to the following address.',
+    'CC_BITCOIN_VALUE' => 'Amount: ',
+    'CC_BITCOIN_ADDRESS' => 'Address: '
 );

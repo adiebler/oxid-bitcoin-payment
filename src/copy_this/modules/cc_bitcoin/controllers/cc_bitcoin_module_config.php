@@ -24,32 +24,32 @@
 /**
  * Extends the module config controller to load exchange rates after saving.
  */
-class cc_bitcoin_module_config extends cc_bitcoin_module_config_parent {
+class cc_bitcoin_module_config extends cc_bitcoin_module_config_parent
+{
+    /**
+     * Module identifier
+     *
+     * @var string
+     */
+    protected $_sModuleId = 'cc_bitcoin';
 
-  /**
-   * Module identifier
-   *
-   * @var string
-   */
-  protected $_sModuleId = 'cc_bitcoin';
+    /**
+     * Checks if cc_bitcoin is the active module and updates the exchanges rates.
+     */
+    public function saveConfVars()
+    {
+        parent::saveConfVars();
 
-  /**
-   * Checks if cc_bitcoin is the active module and updates the exchanges rates.
-   */
-  public function saveConfVars() {
+        if ($this->getEditObjectId() == $this->_sModuleId) {
 
-    parent::saveConfVars();
+            $oxConfig = $this->getConfig();
+            $sShopId = $oxConfig->getShopId();
+            $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
+            $iSource = $oxConfig->getShopConfVar('ccExchangeSource', $sShopId, $sModule);
 
-    if($this->getEditObjectId() == $this->_sModuleId) {
-
-      $oxConfig = $this->getConfig();
-      $sShopId = $oxConfig->getShopId();
-      $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
-      $iSource = $oxConfig->getShopConfVar('ccExchangeSource', $sShopId, $sModule);
-
-      if($iSource > 0) {
-        oxNew('cc_bitcoin_exchange_rate_updater');
-      }
+            if ($iSource > 0) {
+                oxNew('cc_bitcoin_exchange_rate_updater');
+            }
+        }
     }
-  }
 }

@@ -38,14 +38,15 @@ $aModule = array(
   ),
   'lang' => 'de',
   'thumbnail'    => 'CommerceCoding.png',
-  'version'      => '0.1.0',
+  'version'      => '0.2.0',
   'author'       => 'Commerce Coding',
   'url'          => 'http://www.commerce-coding.de',
   'email'        => 'info@commerce-coding.de',
   'files'        => array(
     'cc_bitcoin_exchange_rate_updater' => 'cc_bitcoin/controllers/cc_bitcoin_exchange_rate_updater.php',
     'cc_bitcoin_admin_order'           => 'cc_bitcoin/controllers/cc_bitcoin_admin_order.php',
-    'cc_bitcoin_cron'                  => 'cc_bitcoin/controllers/cc_bitcoin_cron.php'
+    'cc_bitcoin_cron'                  => 'cc_bitcoin/controllers/cc_bitcoin_cron.php',
+    'cc_bitcoin_callback'              => 'cc_bitcoin/controllers/cc_bitcoin_callback.php'
   ),
   'extend'       => array(
     'Module_Config' => 'cc_bitcoin/controllers/cc_bitcoin_module_config',
@@ -64,15 +65,20 @@ $aModule = array(
     array('template' => 'email/plain/order_owner.tpl',          'block' => 'email_plain_order_owner_paymentinfo', 'file' => 'out/blocks/email/plain/order_owner')
   ),
   'settings' => array(
-    array('group' => 'main', 'name' => 'ccExchangeSource', 'type' => 'select', 'value' => '0', 'constrains' => '0|1|2', 'position' => 0),
-    array('group' => 'main', 'name' => 'ccBitcoinEUR',     'type' => 'str',    'value' => ''),
-    array('group' => 'main', 'name' => 'ccBitcoinUSD',     'type' => 'str',    'value' => ''),
-    array('group' => 'main', 'name' => 'ccBitcoinGBP',     'type' => 'str',    'value' => ''),
-    array('group' => 'main', 'name' => 'ccBitcoinCHF',     'type' => 'str',    'value' => ''),
-    array('group' => 'main', 'name' => 'ccCronPassword',   'type' => 'str',    'value' => '')
+    array('group' => 'ccexchange', 'name' => 'ccExchangeSource', 'type' => 'select', 'value' => '0', 'constrains' => '0|1|2', 'position' => 0),
+    array('group' => 'ccexchange', 'name' => 'ccBitcoinEUR',     'type' => 'str',    'value' => ''),
+    array('group' => 'ccexchange', 'name' => 'ccBitcoinUSD',     'type' => 'str',    'value' => ''),
+    array('group' => 'ccexchange', 'name' => 'ccBitcoinGBP',     'type' => 'str',    'value' => ''),
+    array('group' => 'ccexchange', 'name' => 'ccBitcoinCHF',     'type' => 'str',    'value' => ''),
+    array('group' => 'ccexchange', 'name' => 'ccCronPassword',   'type' => 'str',    'value' => ''),
+    array('group' => 'ccauto',     'name' => 'ccAutomatic',      'type' => 'bool',   'value' => '0'),
+    array('group' => 'ccauto',     'name' => 'ccAddress',        'type' => 'str',    'value' => ''),
+    array('group' => 'ccauto',     'name' => 'ccMinConfirms',    'type' => 'str',    'value' => '1'),
+    array('group' => 'ccauto',     'name' => 'ccShared',         'type' => 'bool',   'value' => '0')
   ),
   'templates' => array(
-    'cc_bitcoin_admin_order.tpl'   => 'cc_bitcoin/out/admin/tpl/cc_bitcoin_admin_order.tpl',
-    'cc_bitcoin_email_address.tpl' => 'cc_bitcoin/out/tpl/email/cc_bitcoin_email_address.tpl'
+    'cc_bitcoin_admin_order.tpl'       => 'cc_bitcoin/out/admin/tpl/cc_bitcoin_admin_order.tpl',
+    'cc_bitcoin_email_address.tpl'     => 'cc_bitcoin/out/tpl/email/cc_bitcoin_email_address.tpl',
+    'cc_bitcoin_callback_response.tpl' => 'cc_bitcoin/out/tpl/callback/cc_bitcoin_callback_response.tpl'
   )
 );

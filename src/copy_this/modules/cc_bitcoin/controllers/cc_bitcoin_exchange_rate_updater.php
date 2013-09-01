@@ -24,94 +24,94 @@
 /**
  * Exchange rate update controller.
  */
-class cc_bitcoin_exchange_rate_updater {
+class cc_bitcoin_exchange_rate_updater
+{
+    /**
+     * Module identifier
+     *
+     * @var string
+     */
+    protected $_sModuleId = 'cc_bitcoin';
 
-  /**
-   * Module identifier
-   *
-   * @var string
-   */
-  protected $_sModuleId = 'cc_bitcoin';
+    /**
+     * Supported currencies
+     *
+     * @var array
+     */
+    protected $_aCurrencies = array('EUR', 'USD', 'GBP', 'CHF');
 
-  /**
-   * Supported currencies
-   *
-   * @var array
-   */
-  protected $_aCurrencies = array('EUR', 'USD', 'GBP', 'CHF');
+    /**
+     * Oxid configuration
+     *
+     * @var object
+     */
+    private $_oxConfig = null;
 
-  /**
-   * Oxid configuration
-   *
-   * @var object
-   */
-  private $_oxConfig = null;
+    /**
+     * Active shop ID
+     *
+     * @var int
+     */
+    private $_sShopId = null;
 
-  /**
-   * Active shop ID
-   *
-   * @var int
-   */
-  private $_sShopId = null;
+    /**
+     * Active module
+     *
+     * @var string
+     */
+    private $_sModule = null;
 
-  /**
-   * Active module
-   *
-   * @var string
-   */
-  private $_sModule = null;
+    /**
+     * Constructor checks the set source and call the required method.
+     *
+     * @return null
+     */
+    public function __construct()
+    {
+        $this->_oxConfig = oxRegistry::getConfig();
+        $this->_sShopId = $this->_oxConfig->getShopId();
+        $this->_sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
 
-  /**
-   * Constructor checks the set source and call the required method.
-   *
-   * @return null
-   */
-  public function __construct() {
+        $iSource = $this->_oxConfig->getShopConfVar('ccExchangeSource', $this->_sShopId, $this->_sModule);
 
-    $this->_oxConfig = oxRegistry::getConfig();
-    $this->_sShopId = $this->_oxConfig->getShopId();
-    $this->_sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
+        if ($iSource == 0) {
+            return;
+        }
 
-    $iSource = $this->_oxConfig->getShopConfVar('ccExchangeSource', $this->_sShopId, $this->_sModule);
-
-    if($iSource == 0) {
-      return;
+        switch ($iSource) {
+            case 1:
+                $this->_updateViaBlockchain();
+                break;
+            case 2:
+                $this->_updateViaMtGox();
+                break;
+            default:
+                break;
+        }
     }
 
-    switch ($iSource) {
-      case 1:
-        $this->_updateViaBlockchain();
-        break;
-      case 2:
-        $this->_updateViaMtGox();
-        break;
-      default:
-        break;
+    /**
+     * Update via http://blockchain.info
+     */
+    protected function _updateViaBlockchain()
+    {
+        $sJson = file_get_contents("http://blockchain.info/de/ticker");
+        $aJson = json_decode($sJson, true);
+
+        foreach ($this->_aCurrencies as $sCurrency) {
+            $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $aJson[$sCurrency]['15m'], $this->_sShopId, $this->_sModule);
+        }
     }
-  }
 
-  /**
-   * Update via http://blockchain.info
-   */
-  protected function _updateViaBlockchain() {
-
-    $sJson = file_get_contents("http://blockchain.info/de/ticker");
-    $aJson = json_decode($sJson, true);
-
-    foreach ($this->_aCurrencies as $sCurrency) {
-      $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $aJson[$sCurrency]['15m'], $this->_sShopId, $this->_sModule);
+    /**
+     * Update via http://mtgox.com
+     */
+    protected function _updateViaMtGox()
+    {
+        foreach ($this->_aCurrencies as $sCurrency) {
+            $sJson = file_get_contents('http://data.mtgox.com/api/1/BTC' . $sCurrency . '/ticker');
+            $oJson = json_decode($sJson);
+            $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $oJson->return->avg->value, $this->_sShopId, $this->_sModule);
+        }
     }
-  }
-
-  /**
-   * Update via http://mtgox.com
-   */
-  protected function _updateViaMtGox() {
-
-    foreach ($this->_aCurrencies as $sCurrency) {
-        $sJson = file_get_contents('http://data.mtgox.com/api/1/BTC' . $sCurrency . '/ticker');
-        $oJson = json_decode($sJson);
-        $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $oJson->return->avg->value, $this->_sShopId, $this->_sModule);
-    }
-  }
 }

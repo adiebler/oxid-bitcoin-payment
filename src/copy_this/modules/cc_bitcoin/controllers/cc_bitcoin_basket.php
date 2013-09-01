@@ -24,28 +24,28 @@
 /**
  * Extends the basket controller in order to show the bitcoin amount.
  */
-class cc_bitcoin_basket extends cc_bitcoin_basket_parent {
+class cc_bitcoin_basket extends cc_bitcoin_basket_parent
+{
+    /**
+     * Module identifier
+     *
+     * @var string
+     */
+    protected $_sModuleId = 'cc_bitcoin';
 
-  /**
-   * Module identifier
-   *
-   * @var string
-   */
-  protected $_sModuleId = 'cc_bitcoin';
+    /**
+     * Calculates the requiered bitcoin amount.
+     *
+     * @return float
+     */
+    public function getBitcoinPrice()
+    {
+        $oCur = $this->getConfig()->getActShopCurrencyObject();
+        $oxConfig = $this->getConfig();
+        $sShopId = $oxConfig->getShopId();
+        $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
+        $dExRate = $oxConfig->getShopConfVar('ccBitcoin' . $oCur->name, $sShopId, $sModule);
 
-  /**
-   * Calculates the requiered bitcoin amount.
-   *
-   * @return float
-   */
-  public function getBitcoinPrice() {
-
-    $oCur = $this->getConfig()->getActShopCurrencyObject();
-    $oxConfig = $this->getConfig();
-    $sShopId = $oxConfig->getShopId();
-    $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
-    $dExRate = $oxConfig->getShopConfVar('ccBitcoin' . $oCur->name, $sShopId, $sModule);
-
-    return round($this->getSession()->getBasket()->getPrice()->getBruttoPrice() / $dExRate, 4);
-  }
+        return round($this->getSession()->getBasket()->getPrice()->getBruttoPrice() / $dExRate, 8);
+    }
 }

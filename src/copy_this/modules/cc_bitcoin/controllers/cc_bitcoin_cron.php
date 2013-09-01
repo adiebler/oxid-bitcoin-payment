@@ -24,40 +24,40 @@
 /**
  * Controller for cron job to update exchange rate on a regular basis.
  */
-class cc_bitcoin_cron extends oxView {
+class cc_bitcoin_cron extends oxView
+{
+    /**
+     * Module identifier
+     *
+     * @var string
+     */
+    protected $_sModuleId = 'cc_bitcoin';
 
-  /**
-   * Module identifier
-   *
-   * @var string
-   */
-  protected $_sModuleId = 'cc_bitcoin';
+    /**
+     * Name of template file to render.
+     *
+     * @var string
+     */
+    protected $_sThisTemplate = 'page/shop/start.tpl';
 
-  /**
-   * Name of template file to render.
-   *
-   * @var string
-   */
-  protected $_sThisTemplate = 'page/shop/start.tpl';
+    /**
+     * Checks the given password and if it matches the exchange rates are updated.
+     *
+     * @return string current template file name
+     */
+    public function render()
+    {
+        $oxConfig = oxRegistry::getConfig();
+        $sShopId = $oxConfig->getShopId();
+        $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
 
-  /**
-   * Checks the given password and if it matches the exchange rates are updated.
-   *
-   * @return string current template file name
-   */
-  public function render() {
+        $sCronPasswd = $oxConfig->getShopConfVar('ccCronPassword', $sShopId, $sModule);
+        $sSendPasswd = isset($_GET['passwd']) ? $_GET['passwd'] : '';
 
-    $oxConfig = oxRegistry::getConfig();
-    $sShopId = $oxConfig->getShopId();
-    $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
+        if ($sCronPasswd == $sSendPasswd) {
+            oxNew('cc_bitcoin_exchange_rate_updater');
+        }
 
-    $sCronPasswd = $oxConfig->getShopConfVar('ccCronPassword', $sShopId, $sModule);
-    $sSendPasswd = isset($_GET['passwd']) ? $_GET['passwd'] : '';
-
-    if($sCronPasswd == $sSendPasswd) {
-      oxNew('cc_bitcoin_exchange_rate_updater');
+        return parent::render();
     }
-
-    return parent::render();
-  }
 }

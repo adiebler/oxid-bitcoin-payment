@@ -24,82 +24,81 @@
 /**
  * Controller for Bitcoin order detail view.
  */
-class cc_bitcoin_admin_order extends oxAdminView  {
+class cc_bitcoin_admin_order extends oxAdminView
+{
+    /**
+     * Template for order overview tab
+     *
+     * @var string
+     */
+    protected $_sThisTemplate = 'cc_bitcoin_admin_order.tpl';
 
-  /**
-   * Template for order overview tab
-   *
-   * @var string
-   */
-  protected $_sThisTemplate = 'cc_bitcoin_admin_order.tpl';
-
-  /**
-   * Collects Bitcoin information of the order and returns the template file.
-   *
-   * @return string
-   */
-  public function render() {
-
-    parent::render();
-
-    $oOrder = $this->getEditObject();
-    $this->bitcoinValue = $oOrder->oxorder__ccbitcoinvalue->value;
-    $this->bitcoinAddress = $oOrder->oxorder__ccbitcoinaddress->value;
-
-    return $this->_sThisTemplate;
-  }
-
-  /**
-   * Returns the orders Bitcoin value.
-   *
-   * @return decimal
-   */
-  public function getBitcoinValue() {
-
-    return $this->bitcoinValue;
-  }
-
-  /**
-   * Returns the merchants recipient address.
-   *
-   * @return string
-   */
-  public function getBitcoinAddress() {
-
-    return $this->bitcoinAddress;
-  }
-
-  /**
-   * Loads the corresponding order object.
-   *
-   * @return object
-   */
-  public function getEditObject() {
-
-    $soxId = $this->getEditObjectId();
-
-    if ($this->_oEditObject === null && isset($soxId) && $soxId != "-1")
+    /**
+     * Collects Bitcoin information of the order and returns the template file.
+     *
+     * @return string
+     */
+    public function render()
     {
-      $this->_oEditObject = oxNew("oxorder");
-      $this->_oEditObject->load($soxId);
+        parent::render();
+
+        $oOrder = $this->getEditObject();
+        $this->bitcoinValue = $oOrder->oxorder__ccbitcoinvalue->value;
+        $this->bitcoinAddress = $oOrder->oxorder__ccbitcoinaddress->value;
+
+        return $this->_sThisTemplate;
     }
 
-    return $this->_oEditObject;
-  }
+    /**
+     * Returns the orders Bitcoin value.
+     *
+     * @return decimal
+     */
+    public function getBitcoinValue()
+    {
+        return $this->bitcoinValue;
+    }
 
-  /**
-   * Adds the Bitcoins address to the order object and sends an information
-   * email to the customer.
-   */
-  public function addBitcoinAddress() {
+    /**
+     * Returns the merchants recipient address.
+     *
+     * @return string
+     */
+    public function getBitcoinAddress()
+    {
+        return $this->bitcoinAddress;
+    }
 
-    $sAddress = filter_var($_POST['bitcoin_address'], FILTER_SANITIZE_STRING);
+    /**
+     * Loads the corresponding order object.
+     *
+     * @return object
+     */
+    public function getEditObject()
+    {
+        $soxId = $this->getEditObjectId();
 
-    $oOrder = $this->getEditObject();
-    $oOrder->oxorder__ccbitcoinaddress = new oxField($sAddress);
-    $oOrder->save();
+        if ($this->_oEditObject === null && isset($soxId) && $soxId != "-1") {
+            $this->_oEditObject = oxNew("oxorder");
+            $this->_oEditObject->load($soxId);
+        }
 
-    $oEmail = oxNew('oxemail');
-    $oEmail->sendBitcoinAddressToUser($oOrder);
-  }
+        return $this->_oEditObject;
+    }
+
+    /**
+     * Adds the Bitcoins address to the order object and sends an information
+     * email to the customer.
+     */
+    public function addBitcoinAddress()
+    {
+        $sAddress = filter_var($_POST['bitcoin_address'], FILTER_SANITIZE_STRING);
+
+        $oOrder = $this->getEditObject();
+        $oOrder->oxorder__ccbitcoinaddress = new oxField($sAddress);
+        $oOrder->save();
+
+        $oEmail = oxNew('oxemail');
+        $oEmail->sendBitcoinAddressToUser($oOrder);
+    }
 }

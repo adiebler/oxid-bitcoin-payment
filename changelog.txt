@@ -1,3 +1,10 @@
+==0.2.0 (01.09.2013)==
+* PSR2 coding standard
+* integrated Blockchain API
+* automatic address creation
+* automatic payment confirmation
+* 8 fractional digits for BTC amounts
+
 ==0.1.1 (01.09.2013)==
 * replaced bcchanger.com with mtgox.com
 

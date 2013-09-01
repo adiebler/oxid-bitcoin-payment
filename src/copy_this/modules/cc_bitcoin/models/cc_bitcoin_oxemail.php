@@ -24,49 +24,49 @@
 /**
  * Extends oxemail model to send the bitcoin address to the customer.
  */
-class cc_bitcoin_oxemail extends cc_bitcoin_oxemail_parent {
+class cc_bitcoin_oxemail extends cc_bitcoin_oxemail_parent
+{
+    /**
+     * Bitcoin Address E-Mail-Template
+     *
+     * @var string
+     */
+    protected $_sBitcoinAddressTemplatePlain = "cc_bitcoin_email_address.tpl";
 
-  /**
-    * Bitcoin Address E-Mail-Template
-    *
-    * @var string
-    */
-  protected $_sBitcoinAddressTemplatePlain = "cc_bitcoin_email_address.tpl";
+    /**
+     * Prepares and sends out the email with the recipients address.
+     *
+     * @param object $oOrder order object
+     * @return bool
+     */
+    public function sendBitcoinAddressToUser($oOrder)
+    {
+        $oShop = $this->_getShop();
 
-  /**
-   * Prepares and sends out the email with the recipients address.
-   *
-   * @param object $oOrder order object
-   * @return bool
-   */
-  public function sendBitcoinAddressToUser($oOrder) {
+        // load user
+        $oUser = oxNew('oxuser');
+        $oUser->load($oOrder->oxorder__oxuserid->rawValue);
+        $sFullName = $oUser->oxuser__oxfname->getRawValue() . " " . $oUser->oxuser__oxlname->getRawValue();
 
-    $oShop = $this->_getShop();
+        //set mail params (from, fromName, smtp...)
+        $this->_setMailParams($oShop);
+        $oLang = oxRegistry::getLang();
 
-    // load user
-    $oUser = oxNew('oxuser');
-    $oUser->load($oOrder->oxorder__oxuserid->rawValue);
-    $sFullName = $oUser->oxuser__oxfname->getRawValue() . " " . $oUser->oxuser__oxlname->getRawValue();
+        $oSmarty = $this->_getSmarty();
+        $this->setViewData("value", $oOrder->oxorder__ccbitcoinvalue->value);
+        $this->setViewData("address", $oOrder->oxorder__ccbitcoinaddress->value);
+        $this->setViewData("fullname", $sFullName);
 
-    //set mail params (from, fromName, smtp...)
-    $this->_setMailParams($oShop);
-    $oLang = oxRegistry::getLang();
+        // Process view data array through oxoutput processor
+        $this->_processViewArray();
 
-    $oSmarty = $this->_getSmarty();
-    $this->setViewData("value", $oOrder->oxorder__ccbitcoinvalue->value);
-    $this->setViewData("address", $oOrder->oxorder__ccbitcoinaddress->value);
-    $this->setViewData("fullname", $sFullName);
+        $this->setRecipient($oUser->oxuser__oxusername->value, $sFullName);
+        $this->setFrom($oShop->oxshops__oxowneremail->value, $oShop->oxshops__oxname->getRawValue());
+        $this->setBody($oSmarty->fetch($this->_sBitcoinAddressTemplatePlain, false));
+        $this->setAltBody("");
+        $this->setSubject($oLang->translateString('CC_BITCOIN_ORDER_ADDRESS') . $oOrder->oxorder__oxordernr->getRawValue());
 
-    // Process view data array through oxoutput processor
-    $this->_processViewArray();
-
-    $this->setRecipient($oUser->oxuser__oxusername->value, $sFullName);
-    $this->setFrom($oShop->oxshops__oxowneremail->value, $oShop->oxshops__oxname->getRawValue());
-    $this->setBody($oSmarty->fetch($this->_sBitcoinAddressTemplatePlain, false));
-    $this->setAltBody("");
-    $this->setSubject($oLang->translateString('CC_BITCOIN_ORDER_ADDRESS') . $oOrder->oxorder__oxordernr->getRawValue());
-
-    $blSend = $this->send();
-    return $blSend;
-  }
+        $blSend = $this->send();
+        return $blSend;
+    }
 }

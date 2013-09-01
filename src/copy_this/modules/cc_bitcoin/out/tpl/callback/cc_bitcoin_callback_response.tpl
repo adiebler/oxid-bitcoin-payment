@@ -1,0 +1,1 @@
+[{oxmultilang ident=$oView->getResponse()}]

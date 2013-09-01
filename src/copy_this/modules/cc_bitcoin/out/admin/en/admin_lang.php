@@ -23,17 +23,17 @@
 
 $sLangName = 'English';
 $aLang = array(
-  'charset' => 'UTF-8',
-  'CC_BITCOIN' => 'Bitcoin',
-  'CC_BITCOIN_PAID' => 'This order is intended to be paid with bitcoins.',
-  'CC_BITCOIN_NOT_PAID' => 'Bitcoins weren\'t choosen as payment method.',
-  'CC_BITCOIN_ORDER_VALUE' => 'The calculated Bitcoin amount is: ',
-  'CC_BITCOIN_ENTER_ADDRESS' => 'Enter the desired recipient\'s address: ',
-  'CC_BITCOIN_CHOOSEN_ADDRESS' => 'Your choosen recipient\'s address: ',
-  'CC_BITCOIN_SEND_ADDRESS' => 'Send to Customer',
-  'CC_BITCOIN_ORDER_ADDRESS' => 'Bitcoin Address for Order ',
-  'CC_BITCOIN_HELLO' => 'Hello',
-  'CC_BITCOIN_YOUR_ADDRESS' => 'please send the outstanding Bitcoin amount to the following address.',
-  'CC_BITCOIN_VALUE' => 'Amount: ',
-  'CC_BITCOIN_ADDRESS' => 'Address: '
+    'charset' => 'UTF-8',
+    'CC_BITCOIN' => 'Bitcoin',
+    'CC_BITCOIN_PAID' => 'This order is intended to be paid with bitcoins.',
+    'CC_BITCOIN_NOT_PAID' => 'Bitcoins weren\'t choosen as payment method.',
+    'CC_BITCOIN_ORDER_VALUE' => 'The calculated Bitcoin amount is: ',
+    'CC_BITCOIN_ENTER_ADDRESS' => 'Enter the desired recipient\'s address: ',
+    'CC_BITCOIN_CHOOSEN_ADDRESS' => 'Your choosen / created recipient\'s address: ',
+    'CC_BITCOIN_SEND_ADDRESS' => 'Send to Customer',
+    'CC_BITCOIN_ORDER_ADDRESS' => 'Bitcoin Address for Order ',
+    'CC_BITCOIN_HELLO' => 'Hello',
+    'CC_BITCOIN_YOUR_ADDRESS' => 'please send the outstanding Bitcoin amount to the following address.',
+    'CC_BITCOIN_VALUE' => 'Amount: ',
+    'CC_BITCOIN_ADDRESS' => 'Address: '
 );

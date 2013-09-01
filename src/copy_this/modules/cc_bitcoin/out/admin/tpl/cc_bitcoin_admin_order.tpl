@@ -29,7 +29,7 @@
       <input type="submit" value="[{oxmultilang ident="CC_BITCOIN_SEND_ADDRESS"}]">
     </form>
   [{else}]
-    [{oxmultilang ident="CC_BITCOIN_CHOOSEN_ADDRESS"}][{$oView->getBitcoinAddress()}]
+    [{oxmultilang ident="CC_BITCOIN_CHOOSEN_ADDRESS"}][{$oView->getBitcoinAddress()}] [<a href="https://blockchain.info/address/[{$oView->getBitcoinAddress()}]" target="_blank">Info</a>]
   [{/if}]
 [{else}]
   <strong>[{oxmultilang ident="CC_BITCOIN_NOT_PAID"}]</strong>
