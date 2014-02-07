@@ -1,3 +1,8 @@
+==0.2.1 (07.02.2014)==
+* remove Mt. Gox from exchange rate sites
+* added bitstamp and coinbase as exchange rate sites
+* disabled cron job without password
+
 ==0.2.0 (01.09.2013)==
 * PSR2 coding standard
 * integrated Blockchain API

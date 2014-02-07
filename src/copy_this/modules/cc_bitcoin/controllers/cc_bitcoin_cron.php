@@ -54,7 +54,7 @@ class cc_bitcoin_cron extends oxView
         $sCronPasswd = $oxConfig->getShopConfVar('ccCronPassword', $sShopId, $sModule);
         $sSendPasswd = isset($_GET['passwd']) ? $_GET['passwd'] : '';
 
-        if ($sCronPasswd == $sSendPasswd) {
+        if ($sSendPasswd != '' && $sCronPasswd == $sSendPasswd) {
             oxNew('cc_bitcoin_exchange_rate_updater');
         }
 

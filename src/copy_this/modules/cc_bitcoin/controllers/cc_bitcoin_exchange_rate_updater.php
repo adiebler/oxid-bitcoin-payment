@@ -41,6 +41,13 @@ class cc_bitcoin_exchange_rate_updater
     protected $_aCurrencies = array('EUR', 'USD', 'GBP', 'CHF');
 
     /**
+     * Supported currencies' exchange rates
+     *
+     * @var array
+     */
+    protected $_aRates = array();
+
+    /**
      * Oxid configuration
      *
      * @var object
@@ -83,7 +90,10 @@ class cc_bitcoin_exchange_rate_updater
                 $this->_updateViaBlockchain();
                 break;
             case 2:
-                $this->_updateViaMtGox();
+                $this->_updateViaBitstamp();
+                break;
+            case 3:
+                $this->_updateViaCoinbase();
                 break;
             default:
                 break;
@@ -95,7 +105,7 @@ class cc_bitcoin_exchange_rate_updater
      */
     protected function _updateViaBlockchain()
     {
-        $sJson = file_get_contents("http://blockchain.info/de/ticker");
+        $sJson = file_get_contents("http://blockchain.info/ticker");
         $aJson = json_decode($sJson, true);
 
         foreach ($this->_aCurrencies as $sCurrency) {
@@ -104,14 +114,47 @@ class cc_bitcoin_exchange_rate_updater
     }
 
     /**
-     * Update via http://mtgox.com
+     * Update via http://bitstamp.net
      */
-    protected function _updateViaMtGox()
+    protected function _updateViaBitstamp()
     {
+        $this->_getExchangeRates();
+
+        $sJson = file_get_contents('https://www.bitstamp.net/api/ticker/');
+        $oJson = json_decode($sJson);
+        $sRate = $oJson->last;
+
         foreach ($this->_aCurrencies as $sCurrency) {
-            $sJson = file_get_contents('http://data.mtgox.com/api/1/BTC' . $sCurrency . '/ticker');
+            $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $sRate * $this->_aRates[$sCurrency], $this->_sShopId, $this->_sModule);
+        }
+    }
+
+    /**
+     * Update via http://coinbase.com
+     */
+    protected function _updateViaCoinbase()
+    {
+        $this->_getExchangeRates();
+
+        $sJson = file_get_contents('https://coinbase.com/api/v1/currencies/exchange_rates');
+        $oJson = json_decode($sJson);
+        $sRate = $oJson->btc_to_usd;
+
+        foreach ($this->_aCurrencies as $sCurrency) {
+            $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $sRate * $this->_aRates[$sCurrency], $this->_sShopId, $this->_sModule);
+        }
+    }
+
+    /**
+     * Get fiat currency exchange rates
+     */
+    protected function _getExchangeRates($sBasis = 'USD')
+    {
+        $sUrl = 'http://rate-exchange.appspot.com/currency?from=' . $sBasis . '&to=';
+        foreach ($this->_aCurrencies as $sCurrency) {
+            $sJson = file_get_contents($sUrl . $sCurrency);
             $oJson = json_decode($sJson);
-            $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $oJson->return->avg->value, $this->_sShopId, $this->_sModule);
+            $this->_aRates[$sCurrency] = $oJson->rate;
         }
     }
 }
