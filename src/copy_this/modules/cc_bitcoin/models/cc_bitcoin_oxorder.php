@@ -106,4 +106,24 @@ class cc_bitcoin_oxorder extends cc_bitcoin_oxorder_parent
         $string = $this->getId() . ';' . $this->oxorder__oxpaymentid->value;
         return hash('sha512', $string);
     }
+
+    /**
+     * Prepares output depending on choosen Bitcoin currency unit.
+     *
+     * @param decimal $btcPrice
+     * @return string
+     */
+    public function getFormattedBitcoinPrice()
+    {
+        $oxConfig = $this->getConfig();
+        $sShopId = $oxConfig->getShopId();
+        $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
+        $sUnit = $oxConfig->getShopConfVar('ccCurrency', $sShopId, $sModule);
+
+        switch($sUnit) {
+            case 0: return $this->oxorder__ccbitcoinvalue->value . ' BTC';
+            case 1: return $this->oxorder__ccbitcoinvalue->value * 1000 . ' mBTC';
+            case 2: return $this->oxorder__ccbitcoinvalue->value * 1000000 . ' uBTC';
+        }
+    }
 }

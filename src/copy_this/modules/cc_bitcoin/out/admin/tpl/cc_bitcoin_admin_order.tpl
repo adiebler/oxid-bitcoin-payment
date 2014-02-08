@@ -15,7 +15,7 @@
 <div style="position: relative; float: left; margin: 0px 0px 0px 30px;">
 [{if $oView->getBitcoinValue() > 0}]
   <strong>[{oxmultilang ident="CC_BITCOIN_PAID"}]</strong><br>
-  [{oxmultilang ident="CC_BITCOIN_ORDER_VALUE"}][{$oView->getBitcoinValue()}] BTC<br>
+  [{oxmultilang ident="CC_BITCOIN_ORDER_VALUE"}][{$oView->getBitcoinValue()}]<br>
   [{if $oView->getBitcoinAddress() == ""}]
     <br>
     [{oxmultilang ident="CC_BITCOIN_ENTER_ADDRESS"}]<br>

@@ -24,6 +24,11 @@
 $sLangName = "English";
 $aLang = array(
     'charset' => 'UTF-8',
+    'SHOP_MODULE_GROUP_cccurrency' => 'Bitcoin Currency',
+    'SHOP_MODULE_ccCurrency' => 'Bitcoin Currency Unit',
+    'SHOP_MODULE_ccCurrency_0' => 'BTC',
+    'SHOP_MODULE_ccCurrency_1' => 'mBTC',
+    'SHOP_MODULE_ccCurrency_2' => 'uBTC',
     'SHOP_MODULE_GROUP_ccexchange' => 'Bitcoin Currency Exchange Rates',
     'SHOP_MODULE_ccExchangeSource' => 'Bitcoin Exchange Rates Source',
     'SHOP_MODULE_ccExchangeSource_0' => 'none',

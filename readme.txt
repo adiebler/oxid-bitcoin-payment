@@ -8,7 +8,7 @@ Alexander Diebler
 cc
 
 ==Version==
-0.2.2
+0.3.0
 
 ==Link==
 http://www.commerce-coding.de

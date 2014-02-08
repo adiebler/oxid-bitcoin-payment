@@ -24,6 +24,11 @@
 $sLangName = "Deutsch";
 $aLang = array(
     'charset' => 'UTF-8',
+    'SHOP_MODULE_GROUP_cccurrency' => 'Bitcoin W&auml;hrung',
+    'SHOP_MODULE_ccCurrency' => 'Bitcoin W&auml;hrungseinheit',
+    'SHOP_MODULE_ccCurrency_0' => 'BTC',
+    'SHOP_MODULE_ccCurrency_1' => 'mBTC',
+    'SHOP_MODULE_ccCurrency_2' => 'uBTC',
     'SHOP_MODULE_GROUP_ccexchange' => 'Bitcoin W&auml;hrungsumrechnung',
     'SHOP_MODULE_ccExchangeSource' => 'Bitcoin Wechselkurs-Quelle',
     'SHOP_MODULE_ccExchangeSource_0' => 'keine',

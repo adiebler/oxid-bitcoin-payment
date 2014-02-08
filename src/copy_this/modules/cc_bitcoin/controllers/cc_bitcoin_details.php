@@ -45,7 +45,12 @@ class cc_bitcoin_details extends cc_bitcoin_details_parent
         $sShopId = $oxConfig->getShopId();
         $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
         $dExRate = $oxConfig->getShopConfVar('ccBitcoin' . $oCur->name, $sShopId, $sModule);
+        $sUnit = $oxConfig->getShopConfVar('ccCurrency', $sShopId, $sModule);
 
-        return round($this->getProduct()->getPrice()->getBruttoPrice() / $dExRate, 8);
+        switch($sUnit) {
+            case 0: return round($this->getProduct()->getPrice()->getBruttoPrice() / $dExRate, 8) . ' BTC';
+            case 1: return round($this->getProduct()->getPrice()->getBruttoPrice() / $dExRate, 8) * 1000 . ' mBTC';
+            case 2: return round($this->getProduct()->getPrice()->getBruttoPrice() / $dExRate, 8) * 1000000 . ' uBTC';
+        }
     }
 }

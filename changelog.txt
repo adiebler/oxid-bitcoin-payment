@@ -1,3 +1,6 @@
+==0.3.0 (08.02.2013)==
+* possibility to choose between BTC, mBTC and uBTC
+
 ==0.2.2 (07.02.2014)==
 * qr code for bitcoin address in email template
 * store footer in bitcoin address email

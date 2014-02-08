@@ -38,7 +38,7 @@ $aModule = array(
   ),
   'lang' => 'de',
   'thumbnail'    => 'CommerceCoding.png',
-  'version'      => '0.2.2',
+  'version'      => '0.3.0',
   'author'       => 'Commerce Coding',
   'url'          => 'http://www.commerce-coding.de',
   'email'        => 'info@commerce-coding.de',
@@ -65,6 +65,7 @@ $aModule = array(
     array('template' => 'email/plain/order_owner.tpl',          'block' => 'email_plain_order_owner_paymentinfo', 'file' => 'out/blocks/email/plain/order_owner')
   ),
   'settings' => array(
+    array('group' => 'cccurrency', 'name' => 'ccCurrency', 'type' => 'select', 'value' => '0', 'constrains' => '0|1|2', 'position' => 0),
     array('group' => 'ccexchange', 'name' => 'ccExchangeSource', 'type' => 'select', 'value' => '0', 'constrains' => '0|1|2|3', 'position' => 0),
     array('group' => 'ccexchange', 'name' => 'ccBitcoinEUR',     'type' => 'str',    'value' => ''),
     array('group' => 'ccexchange', 'name' => 'ccBitcoinUSD',     'type' => 'str',    'value' => ''),

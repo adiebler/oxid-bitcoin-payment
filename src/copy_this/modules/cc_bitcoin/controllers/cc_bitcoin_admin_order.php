@@ -43,7 +43,7 @@ class cc_bitcoin_admin_order extends oxAdminView
         parent::render();
 
         $oOrder = $this->getEditObject();
-        $this->bitcoinValue = $oOrder->oxorder__ccbitcoinvalue->value;
+        $this->bitcoinValue = $oOrder->getFormattedBitcoinPrice();
         $this->bitcoinAddress = $oOrder->oxorder__ccbitcoinaddress->value;
 
         return $this->_sThisTemplate;

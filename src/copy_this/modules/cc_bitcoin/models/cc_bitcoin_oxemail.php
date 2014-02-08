@@ -53,7 +53,7 @@ class cc_bitcoin_oxemail extends cc_bitcoin_oxemail_parent
         $oLang = oxRegistry::getLang();
 
         $oSmarty = $this->_getSmarty();
-        $this->setViewData("value", $oOrder->oxorder__ccbitcoinvalue->value);
+        $this->setViewData("value", $oOrder->getFormattedBitcoinPrice());
         $this->setViewData("address", $oOrder->oxorder__ccbitcoinaddress->value);
         $this->setViewData("fullname", $sFullName);
 
