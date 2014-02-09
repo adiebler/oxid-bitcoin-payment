@@ -150,11 +150,11 @@ class cc_bitcoin_exchange_rate_updater
      */
     protected function _getExchangeRates($sBasis = 'USD')
     {
-        $sUrl = 'http://rate-exchange.appspot.com/currency?from=' . $sBasis . '&to=';
+        $sUrl = 'https://bitdango.com/api/currencypairs/' . $sBasis;
         foreach ($this->_aCurrencies as $sCurrency) {
             $sJson = file_get_contents($sUrl . $sCurrency);
             $oJson = json_decode($sJson);
-            $this->_aRates[$sCurrency] = $oJson->rate;
+            $this->_aRates[$sCurrency] = $oJson->ExchangeRate;
         }
     }
 }

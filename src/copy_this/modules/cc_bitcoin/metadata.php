@@ -38,7 +38,7 @@ $aModule = array(
   ),
   'lang' => 'de',
   'thumbnail'    => 'CommerceCoding.png',
-  'version'      => '0.3.0',
+  'version'      => '0.3.1',
   'author'       => 'Commerce Coding',
   'url'          => 'http://www.commerce-coding.de',
   'email'        => 'info@commerce-coding.de',

@@ -1,3 +1,6 @@
+==0.3.1 (09.02.2013)==
+* using bitdango API for currency exchange rates
+
 ==0.3.0 (08.02.2013)==
 * possibility to choose between BTC, mBTC and uBTC
 
