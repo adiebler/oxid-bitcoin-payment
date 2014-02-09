@@ -49,12 +49,12 @@ $aModule = array(
     'cc_bitcoin_callback'              => 'cc_bitcoin/controllers/cc_bitcoin_callback.php'
   ),
   'extend'       => array(
-    'Module_Config' => 'cc_bitcoin/controllers/cc_bitcoin_module_config',
-    'Details'       => 'cc_bitcoin/controllers/cc_bitcoin_details',
-    'Basket'        => 'cc_bitcoin/controllers/cc_bitcoin_basket',
-    'Order'         => 'cc_bitcoin/controllers/cc_bitcoin_order',
-    'oxorder'       => 'cc_bitcoin/models/cc_bitcoin_oxorder',
-    'oxemail'       => 'cc_bitcoin/models/cc_bitcoin_oxemail'
+    'Module_Config'     => 'cc_bitcoin/controllers/cc_bitcoin_module_config',
+    'oxwArticleDetails' => 'cc_bitcoin/controllers/cc_bitcoin_details',
+    'Basket'            => 'cc_bitcoin/controllers/cc_bitcoin_basket',
+    'Order'             => 'cc_bitcoin/controllers/cc_bitcoin_order',
+    'oxorder'           => 'cc_bitcoin/models/cc_bitcoin_oxorder',
+    'oxemail'           => 'cc_bitcoin/models/cc_bitcoin_oxemail'
   ),
   'blocks' => array(
     array('template' => 'page/details/inc/productmain.tpl',     'block' => 'details_productmain_priceperunit',    'file' => 'out/blocks/page/details/inc/productmain'),
