@@ -1,3 +1,8 @@
+==0.3.2 (09.02.2014)==
+* parallel use of Details and oxwArticleDetails
+* compatible for OXID 4.7.X and 4.8.X
+* failover for exchange rate server errors
+
 ==0.3.1 (09.02.2014)==
 * using bitdango API for currency exchange rates
 

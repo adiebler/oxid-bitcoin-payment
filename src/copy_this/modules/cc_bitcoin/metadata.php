@@ -38,7 +38,7 @@ $aModule = array(
   ),
   'lang' => 'de',
   'thumbnail'    => 'CommerceCoding.png',
-  'version'      => '0.3.1',
+  'version'      => '0.3.2',
   'author'       => 'Commerce Coding',
   'url'          => 'http://www.commerce-coding.de',
   'email'        => 'info@commerce-coding.de',
@@ -50,7 +50,8 @@ $aModule = array(
   ),
   'extend'       => array(
     'Module_Config'     => 'cc_bitcoin/controllers/cc_bitcoin_module_config',
-    'oxwArticleDetails' => 'cc_bitcoin/controllers/cc_bitcoin_details',
+    'Details'           => 'cc_bitcoin/controllers/cc_bitcoin_details',
+    'oxwArticleDetails' => 'cc_bitcoin/controllers/cc_bitcoin_oxwarticledetails',
     'Basket'            => 'cc_bitcoin/controllers/cc_bitcoin_basket',
     'Order'             => 'cc_bitcoin/controllers/cc_bitcoin_order',
     'oxorder'           => 'cc_bitcoin/models/cc_bitcoin_oxorder',

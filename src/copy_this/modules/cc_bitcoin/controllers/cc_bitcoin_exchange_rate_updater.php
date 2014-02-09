@@ -120,6 +120,12 @@ class cc_bitcoin_exchange_rate_updater
     {
         $this->_getExchangeRates();
 
+        // failover for exchange rate server error
+        if(in_array(null, $this->_aRates)) {
+            $this->_updateViaBlockchain();
+            return;
+        }
+
         $sJson = file_get_contents('https://www.bitstamp.net/api/ticker/');
         $oJson = json_decode($sJson);
         $sRate = $oJson->last;
@@ -135,6 +141,12 @@ class cc_bitcoin_exchange_rate_updater
     protected function _updateViaCoinbase()
     {
         $this->_getExchangeRates();
+
+        // failover for exchange rate server error
+        if(in_array(null, $this->_aRates)) {
+            $this->_updateViaBlockchain();
+            return;
+        }
 
         $sJson = file_get_contents('https://coinbase.com/api/v1/currencies/exchange_rates');
         $oJson = json_decode($sJson);
@@ -152,7 +164,7 @@ class cc_bitcoin_exchange_rate_updater
     {
         $sUrl = 'https://bitdango.com/api/currencypairs/' . $sBasis;
         foreach ($this->_aCurrencies as $sCurrency) {
-            $sJson = file_get_contents($sUrl . $sCurrency);
+            $sJson = @file_get_contents($sUrl . $sCurrency);
             $oJson = json_decode($sJson);
             $this->_aRates[$sCurrency] = $oJson->ExchangeRate;
         }
