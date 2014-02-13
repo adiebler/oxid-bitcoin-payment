@@ -38,7 +38,7 @@ $aModule = array(
   ),
   'lang' => 'de',
   'thumbnail'    => 'CommerceCoding.png',
-  'version'      => '0.3.2',
+  'version'      => '0.3.3',
   'author'       => 'Commerce Coding',
   'url'          => 'http://www.commerce-coding.de',
   'email'        => 'info@commerce-coding.de',
@@ -58,12 +58,13 @@ $aModule = array(
     'oxemail'           => 'cc_bitcoin/models/cc_bitcoin_oxemail'
   ),
   'blocks' => array(
-    array('template' => 'page/details/inc/productmain.tpl',     'block' => 'details_productmain_priceperunit',    'file' => 'out/blocks/page/details/inc/productmain'),
-    array('template' => 'page/checkout/inc/basketcontents.tpl', 'block' => 'checkout_basketcontents_grandtotal',  'file' => 'out/blocks/page/checkout/inc/basketcontents'),
-    array('template' => 'email/html/order_cust.tpl',            'block' => 'email_html_order_cust_paymentinfo',   'file' => 'out/blocks/email/html/order_cust'),
-    array('template' => 'email/html/order_owner.tpl',           'block' => 'email_html_order_owner_paymentinfo',  'file' => 'out/blocks/email/html/order_owner'),
-    array('template' => 'email/plain/order_cust.tpl',           'block' => 'email_plain_order_cust_paymentinfo',  'file' => 'out/blocks/email/plain/order_cust'),
-    array('template' => 'email/plain/order_owner.tpl',          'block' => 'email_plain_order_owner_paymentinfo', 'file' => 'out/blocks/email/plain/order_owner')
+    array('template' => 'page/details/inc/productmain.tpl',     'block' => 'details_productmain_priceperunit',   'file' => 'out/blocks/page/details/inc/productmain'),
+    array('template' => 'page/checkout/inc/basketcontents.tpl', 'block' => 'checkout_basketcontents_grandtotal', 'file' => 'out/blocks/page/checkout/inc/basketcontents'),
+	array('template' => 'layout/sidebar.tpl',                   'block' => 'sidebar',                            'file' => 'out/blocks/layout/sidebar'),
+    array('template' => 'email/html/order_cust.tpl',            'block' => 'email_html_order_cust_paymentinfo',  'file' => 'out/blocks/email/html/order_cust'),
+    array('template' => 'email/html/order_owner.tpl',           'block' => 'email_html_order_owner_paymentinfo', 'file' => 'out/blocks/email/html/order_owner'),
+    array('template' => 'email/plain/order_cust.tpl',           'block' => 'email_plain_order_cust_paymentinfo', 'file' => 'out/blocks/email/plain/order_cust'),
+    array('template' => 'email/plain/order_owner.tpl',          'block' => 'email_plain_order_ownerpaymentinfo', 'file' => 'out/blocks/email/plain/order_owner')
   ),
   'settings' => array(
     array('group' => 'cccurrency', 'name' => 'ccCurrency', 'type' => 'select', 'value' => '0', 'constrains' => '0|1|2', 'position' => 0),
