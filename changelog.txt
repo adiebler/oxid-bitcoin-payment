@@ -1,3 +1,7 @@
+==0.3.4 (13.02.2014)==
+* added bitcoinaverage.com as exchange rate source
+* special thanks to Kalle from VeganWonderland - vegan-wonderland.de
+
 ==0.3.3 (13.02.2014)==
 * fixed typo for block "email_plain_order_ownerpaymentinfo"
 * added "Bitcoin Accepted Here" for startpage sidebar

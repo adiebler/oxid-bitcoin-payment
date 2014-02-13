@@ -35,6 +35,7 @@ $aLang = array(
     'SHOP_MODULE_ccExchangeSource_1' => 'blockchain.info',
     'SHOP_MODULE_ccExchangeSource_2' => 'bitstamp.net',
     'SHOP_MODULE_ccExchangeSource_3' => 'coinbase.com',
+    'SHOP_MODULE_ccExchangeSource_4' => 'bitcoinaverage.com',
     'SHOP_MODULE_ccBitcoinEUR' => 'Wechselkurs EUR',
     'HELP_SHOP_MODULE_ccBitcoinEUR' => '',
     'SHOP_MODULE_ccBitcoinUSD' => 'Wechselkurs USD',

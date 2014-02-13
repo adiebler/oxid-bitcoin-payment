@@ -95,6 +95,9 @@ class cc_bitcoin_exchange_rate_updater
             case 3:
                 $this->_updateViaCoinbase();
                 break;
+            case 4:
+                $this->_updateViaBitcoinaverage();
+                break;
             default:
                 break;
         }
@@ -154,6 +157,19 @@ class cc_bitcoin_exchange_rate_updater
 
         foreach ($this->_aCurrencies as $sCurrency) {
             $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $sRate * $this->_aRates[$sCurrency], $this->_sShopId, $this->_sModule);
+        }
+    }
+
+    /**
+     * Update via http://bitcoinaverage.com
+     */
+    protected function _updateViaBitcoinaverage()
+    {
+        $sJson = file_get_contents('http://api.bitcoinaverage.com/all');
+        $aJson = json_decode($sJson, true);
+
+        foreach ($this->_aCurrencies as $sCurrency) {
+            $this->_oxConfig->saveShopConfVar('str', 'ccBitcoin' . $sCurrency, $aJson[$sCurrency]['averages']['last'], $this->_sShopId, $this->_sModule);
         }
     }
 
