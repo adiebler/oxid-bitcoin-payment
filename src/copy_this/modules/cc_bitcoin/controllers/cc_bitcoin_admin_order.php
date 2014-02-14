@@ -94,8 +94,13 @@ class cc_bitcoin_admin_order extends oxAdminView
     {
         $sAddress = filter_var($_POST['bitcoin_address'], FILTER_SANITIZE_STRING);
 
+        if((string) file_get_contents('http://blockexplorer.com/q/checkaddress/' . $sAddress) != '00') {
+            return;
+        }
+
         $oOrder = $this->getEditObject();
         $oOrder->oxorder__ccbitcoinaddress = new oxField($sAddress);
+        $oOrder->oxorder__ccbitcoinsecret = new oxField(sha1(uniqid('', true)));
         $oOrder->save();
 
         $oEmail = oxNew('oxemail');

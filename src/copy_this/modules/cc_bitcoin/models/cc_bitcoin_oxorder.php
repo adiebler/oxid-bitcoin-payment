@@ -45,9 +45,7 @@ class cc_bitcoin_oxorder extends cc_bitcoin_oxorder_parent
      */
     public function finalizeOrder(oxBasket $oBasket, $oUser, $blRecalculatingOrder = false)
     {
-        $iParent = parent::finalizeOrder($oBasket, $oUser, $blRecalculatingOrder);
-
-        if ($this->oxorder__oxpaymenttype->value == 'oxidbitcoin') {
+        if ($oBasket->getPaymentId() == 'oxidbitcoin') {
 
             $oCur = $this->getConfig()->getActShopCurrencyObject();
             $oxConfig = $this->getConfig();
@@ -55,22 +53,19 @@ class cc_bitcoin_oxorder extends cc_bitcoin_oxorder_parent
             $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
             $dExRate = $oxConfig->getShopConfVar('ccBitcoin' . $oCur->name, $sShopId, $sModule);
 
-            $this->oxorder__ccbitcoinvalue = new oxField(round($this->oxorder__oxtotalordersum->value / $dExRate, 8));
+            $this->oxorder__ccbitcoinvalue = new oxField(round($oBasket->getPrice()->getBruttoPrice() / $dExRate, 8));
 
             $bAutomatic = $oxConfig->getShopConfVar('ccAutomatic', $sShopId, $sModule);
             if ($bAutomatic) {
                 $sAddress = $oxConfig->getShopConfVar('ccAddress', $sShopId, $sModule);
                 $bShared = $oxConfig->getShopConfVar('ccShared', $sShopId, $sModule);
-                $this->oxorder__ccbitcoinaddress = new oxField($this->_getPaymentAddress($sAddress, $bShared));
-
-                $oEmail = oxNew('oxemail');
-                $oEmail->sendBitcoinAddressToUser($this);
+                $sSecret = sha1(uniqid('', true));
+                $this->oxorder__ccbitcoinaddress = new oxField($this->_getPaymentAddress($sAddress, $bShared, $sSecret));
+                $this->oxorder__ccbitcoinsecret = new oxField($sSecret);
             }
-
-            $this->save();
         }
 
-        return $iParent;
+        return parent::finalizeOrder($oBasket, $oUser, $blRecalculatingOrder);
     }
 
     /**
@@ -78,33 +73,20 @@ class cc_bitcoin_oxorder extends cc_bitcoin_oxorder_parent
      *
      * @param string $sAddress
      * @param boolean $bShared
+     * @param string $sSecret
      * @return string
      */
-    protected function _getPaymentAddress($sAddress, $bShared)
+    protected function _getPaymentAddress($sAddress, $bShared, $sSecret)
     {
         $sUrl = 'https://blockchain.info/api/receive?method=create';
-        $sUrl .= '&cl=' . 'cc_bitcoin_callback';
-        $sUrl .= '&secret=' . $this->getBitcoinHash();
         $sUrl .= '&address=' . $sAddress;
-        $sUrl .= '&order=' . $this->oxorder__oxordernr->value;
         $sUrl .= $bShared ? '&shared=true' : '&shared=false';
-        $sUrl .= '&callback=' . urldecode($this->getConfig()->getShopUrl() . 'index.php');
+        $sUrl .= '&callback=' . urlencode($this->getConfig()->getShopUrl() . 'index.php?cl=cc_bitcoin_callback&secret=' . $sSecret);
 
         $sJson = file_get_contents($sUrl);
         $oJson = json_decode($sJson);
 
         return $oJson->input_address;
-    }
-
-    /**
-     * Creates the hash for the Blockchain API.
-     *
-     * @return string
-     */
-    public function getBitcoinHash()
-    {
-        $string = $this->getId() . ';' . $this->oxorder__oxpaymentid->value;
-        return hash('sha512', $string);
     }
 
     /**

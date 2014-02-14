@@ -30,6 +30,6 @@ $aLang = array(
     'CC_BITCOIN_ORDER_ADDRESS' => 'Bitcoin-Adresse zur Bestellung ',
     'CC_BITCOIN_HELLO' => 'Hallo',
     'CC_BITCOIN_YOUR_ADDRESS' => 'bitte senden Sie den  ausstehenden Bitcoin-Betrag an die folgende Adresse.',
-    'CC_BITCOIN_VALUE' => 'Betrag: ',
+    'CC_BITCOIN_VALUE' => 'Betrag (BTC): ',
     'CC_BITCOIN_ADDRESS' => 'Adresse: '
 );

@@ -95,17 +95,16 @@ class cc_bitcoin_callback extends oxView
         if ($confirms < $iMinConfirms) {
             $this->_response = self::STATUS_ERROR;
         } else {
-            $sOrderNr = filter_var($_GET['order'], FILTER_SANITIZE_STRING);
             $sSecret = filter_var($_GET['secret'], FILTER_SANITIZE_STRING);
             $sSatoshi = filter_var($_GET['value'], FILTER_SANITIZE_NUMBER_INT);
             $dBitcoins = $sSatoshi / 100000000;
 
-            $rs = oxDb::getDb()->Execute("SELECT OXID FROM oxorder WHERE OXORDERNR = '" . $sOrderNr . "'");
-            $oOrder = oxNew("oxorder");
+            $rs = oxDb::getDb()->Execute("SELECT OXID FROM oxorder WHERE CCBITCOINSECRET = '" . $sSecret . "'");
+            $oOrder = oxNew('oxorder');
             $oOrder->load($rs->fields[0]);
 
-            if ($dBitcoins == $oOrder->oxorder__ccbitcoinvalue->value && $sSecret == $oOrder->getBitcoinHash()) {
-                $oOrder->oxorder__oxpaid->setValue(date("Y-m-d H:i:s", time()));
+            if ($dBitcoins == $oOrder->oxorder__ccbitcoinvalue->value &&  $oOrder->oxorder__oxpaid->value == '0000-00-00 00:00:00') {
+                $oOrder->oxorder__oxpaid = new oxField(date("Y-m-d H:i:s", time()));
                 $oOrder->save();
                 $this->_response = self::STATUS_OK;
             } else {

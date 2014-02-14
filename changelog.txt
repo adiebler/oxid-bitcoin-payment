@@ -1,3 +1,8 @@
+==0.4.0 (14.02.2014)==
+* BUGFIX: IPN callback for automatic generated addresses
+* Bitcoin address information are added to order confirmation mail
+* checking manually entered addresses before sending them out
+
 ==0.3.4 (13.02.2014)==
 * added bitcoinaverage.com as exchange rate source
 * special thanks to Kalle from VeganWonderland - vegan-wonderland.de
